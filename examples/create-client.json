@@ -1,0 +1,22 @@
+{
+  "name": "Create a Sabia client",
+  "nodes": [
+    {
+      "parameters": {
+        "resource": "client",
+        "operation": "create",
+        "firstName": "={{ $json.firstName }}",
+        "lastName": "={{ $json.lastName }}",
+        "email": "={{ $json.email }}"
+      },
+      "type": "n8n-nodes-sabia.sabia",
+      "typeVersion": 1,
+      "position": [460, 300],
+      "id": "80dfc38c-315f-44c5-8f38-cf4b6079b101",
+      "name": "Create Client"
+    }
+  ],
+  "connections": {},
+  "active": false,
+  "settings": {}
+}

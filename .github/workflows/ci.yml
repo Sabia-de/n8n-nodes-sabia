@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+# Cancel in-progress runs for the same branch/PR to avoid wasting CI minutes.
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: 'npm ci'
+
+      - name: Run lint
+        run: 'npm run lint'
+
+      - name: Run build
+        run: 'npm run build'
+
+      - name: Run contract and signature tests
+        run: 'npm test'
+
+  compatibility:
+    strategy:
+      matrix:
+        n8n-version: ['2.0.0', 'latest']
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+      - run: npm ci
+      - name: Install n8n compatibility target
+        run: npm install --no-save n8n@${{ matrix.n8n-version }}
+      - run: npm run build
+      - run: npx n8n --version

@@ -1,0 +1,16 @@
+{
+  "name": "Start when a Sabia client changes",
+  "nodes": [
+    {
+      "parameters": { "event": "client.updated" },
+      "type": "n8n-nodes-sabia.sabiaTrigger",
+      "typeVersion": 1,
+      "position": [280, 300],
+      "id": "e774b71f-f2ac-4cc8-9071-26d91e0afabb",
+      "name": "Client Updated"
+    }
+  ],
+  "connections": {},
+  "active": false,
+  "settings": {}
+}
