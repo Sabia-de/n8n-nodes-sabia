@@ -17,12 +17,13 @@ Ask a Sabia platform administrator to create a named integration key for your or
 
 1. Open the organization in Sabia platform admin.
 2. Select **Integrationen**.
-3. Create a key and copy it. Sabia shows the full key once.
-4. In n8n, create **Sabia API** credentials and paste that key.
+3. Select only the client and trigger permissions that the workflow needs.
+4. Select a validity period and create the key. Sabia shows the full key once.
+5. In n8n, create **Sabia API** credentials and paste that key.
 
 The credential connects to `https://app.sabia.de/api/v1`. It asks only for the API key. The credential test returns the linked organization and available capabilities.
 
-Treat the API key as a secret. Revoke it in Sabia to stop API access and disable all webhook subscriptions linked to that key.
+Treat the API key as a secret. Replace it before its expiry date. Revoke it in Sabia to stop API access and disable all webhook subscriptions linked to that key.
 
 ## Operations
 
@@ -56,7 +57,7 @@ This package supports n8n 2.x and Node.js 22 or newer. CI tests n8n 2.0.0 and th
 
 ## Contract
 
-The generated files in [`contract/`](contract/) come from Sabia's canonical Zod schemas. `contract.json` records contract version `1.0.0` and its SHA-256 checksum. The node has no runtime dependencies; Sabia remains the runtime validation authority and the trigger uses focused zero-dependency guards.
+The generated files in [`contract/`](contract/) come from Sabia's canonical Zod schemas. `contract.json` records contract version `1.1.0` and its SHA-256 checksum. The node has no runtime dependencies; Sabia remains the runtime validation authority and the trigger uses focused zero-dependency guards.
 
 ## License
 

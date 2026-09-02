@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Sabia Integration API v1",
-  "contractVersion": "1.0.0",
+  "contractVersion": "1.1.0",
   "apiVersion": "v1",
   "$defs": {
     "AuthorizationHeaders": {
@@ -21,6 +21,7 @@
     "Capabilities": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
       "minItems": 1,
+      "maxItems": 5,
       "type": "array",
       "items": {
         "type": "string",
@@ -833,6 +834,7 @@
             },
             "changedFields": {
               "minItems": 1,
+              "maxItems": 5,
               "type": "array",
               "items": {
                 "type": "string",
@@ -899,6 +901,7 @@
         },
         "capabilities": {
           "minItems": 1,
+          "maxItems": 5,
           "type": "array",
           "items": {
             "type": "string",
@@ -1047,6 +1050,25 @@
               },
               "required": [
                 "retryAfterSeconds"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "requiredCapability": {
+                  "type": "string",
+                  "enum": [
+                    "clients:create",
+                    "clients:read",
+                    "clients:search",
+                    "clients:update",
+                    "webhooks:manage"
+                  ]
+                }
+              },
+              "required": [
+                "requiredCapability"
               ],
               "additionalProperties": false
             },
@@ -1378,6 +1400,7 @@
                 },
                 "changedFields": {
                   "minItems": 1,
+                  "maxItems": 5,
                   "type": "array",
                   "items": {
                     "type": "string",
