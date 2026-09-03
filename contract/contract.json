@@ -1,8 +1,8 @@
 {
-  "contractVersion": "1.0.0",
+  "contractVersion": "1.1.1",
   "apiVersion": "v1",
   "checksumAlgorithm": "sha256",
-  "checksum": "2ae021b628f9035fb9534e6cfbf43a15a45d59fd1657605a21fec5c0559e6339",
+  "checksum": "04a5dc417d58da687f66a4584b2bcd5eeacfc20035930bade500b8890a8e4213",
   "generatedFiles": [
     "public-api-v1.openapi.json",
     "public-api-v1.schemas.json",

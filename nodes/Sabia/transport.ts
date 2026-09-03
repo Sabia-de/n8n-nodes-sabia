@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 import {
 	NodeOperationError,
 	type IDataObject,
@@ -5,6 +6,7 @@ import {
 	type IHttpRequestOptions,
 	type INodeExecutionData,
 } from 'n8n-workflow';
+import { isClientRecord } from '../SabiaTrigger/guards';
 
 const CONTACT_FIELDS = ['firstName', 'lastName', 'displayName', 'email', 'phone'] as const;
 
@@ -16,7 +18,12 @@ export async function prepareCreateRequest(
 	if (!body.firstName && !body.lastName && !body.displayName && !body.email) {
 		throw new NodeOperationError(this.getNode(), 'Enter at least one name field or an email address.');
 	}
-	return { ...request, body };
+	const itemIndex = this.getItemIndex();
+	const idempotencyKey = createHash('sha256').update(JSON.stringify([
+		this.getInstanceId(), this.getWorkflow().id, this.getExecutionId(), this.getNode().id,
+		this.getWorkflowDataProxy(itemIndex).$thisRunIndex, itemIndex,
+	])).digest('hex');
+	return { ...request, headers: { ...request.headers, 'Idempotency-Key': `n8n:${idempotencyKey}` }, body };
 }
 
 export async function prepareUpdateRequest(
@@ -41,7 +48,8 @@ export async function unwrapClientList(
 			throw new NodeOperationError(this.getNode(), 'Sabia returned an invalid client list.');
 		}
 		for (const client of clients) {
-			if (client && typeof client === 'object' && !Array.isArray(client)) output.push({ json: client });
+			if (!isClientRecord(client)) throw new NodeOperationError(this.getNode(), 'Sabia returned an invalid client.');
+			output.push({ ...item, json: client as unknown as IDataObject });
 		}
 	}
 	return output;
@@ -53,6 +61,7 @@ function cleanContactBody(body: IDataObject, clearEmpty: boolean): IDataObject {
 	for (const field of CONTACT_FIELDS) {
 		if (!(field in source)) continue;
 		const value = source[field];
+		if (value === null && clearEmpty) { result[field] = null; continue; }
 		if (typeof value !== 'string') continue;
 		const trimmed = value.trim();
 		if (trimmed) result[field] = field === 'email' ? trimmed.toLowerCase() : trimmed;
