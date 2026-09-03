@@ -38,6 +38,7 @@ jobs:
 
   compatibility:
     strategy:
+      fail-fast: false
       matrix:
         n8n-version: ['2.0.0', 'latest']
     runs-on: ubuntu-latest
@@ -48,13 +49,17 @@ jobs:
           node-version: '24'
           cache: 'npm'
       - run: npm ci
-      - name: Install n8n compatibility target
+      - run: npm run build
+      - name: Test the packed node in an isolated n8n runtime
         env:
           TASK_N8N_VERSION: ${{ matrix.n8n-version }}
         run: |
-          task_workflow_version="$(npm view "n8n@$TASK_N8N_VERSION" dependencies.n8n-workflow)"
-          npm install --no-save "n8n@$TASK_N8N_VERSION" "n8n-workflow@$task_workflow_version"
-      - run: npm run build
-      - name: Run action, lifecycle and contract tests with the installed n8n runtime
-        run: node --test tests/*.test.cjs
-      - run: npx n8n --version
+          task_n8n_version="$(npm view "n8n@$TASK_N8N_VERSION" version)"
+          task_workflow_version="$(npm view "n8n@$task_n8n_version" dependencies.n8n-workflow)"
+          task_runtime="$(mktemp -d)"
+          task_tarball="$(npm pack --silent --pack-destination "$RUNNER_TEMP")"
+          npm install --prefix "$task_runtime" --no-audit --no-fund "n8n@$task_n8n_version" "n8n-workflow@$task_workflow_version" "$RUNNER_TEMP/$task_tarball"
+          cp -R tests contract "$task_runtime/node_modules/n8n-nodes-sabia/"
+          node -e 'const {createRequire}=require("node:module"); const {join}=require("node:path"); const root=process.argv[1]; const runtime=createRequire(join(root,"node_modules/n8n/package.json")); const node=createRequire(join(root,"node_modules/n8n-nodes-sabia/package.json")); if(runtime.resolve("n8n-workflow")!==node.resolve("n8n-workflow")) throw new Error("The package and n8n must use the same workflow runtime");' "$task_runtime"
+          node --test "$task_runtime/node_modules/n8n-nodes-sabia/tests/"*.test.cjs
+          "$task_runtime/node_modules/.bin/n8n" --version
