@@ -49,6 +49,12 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - name: Install n8n compatibility target
-        run: npm install --no-save n8n@${{ matrix.n8n-version }}
+        env:
+          TASK_N8N_VERSION: ${{ matrix.n8n-version }}
+        run: |
+          task_workflow_version="$(npm view "n8n@$TASK_N8N_VERSION" dependencies.n8n-workflow)"
+          npm install --no-save "n8n@$TASK_N8N_VERSION" "n8n-workflow@$task_workflow_version"
       - run: npm run build
+      - name: Run action, lifecycle and contract tests with the installed n8n runtime
+        run: node --test tests/*.test.cjs
       - run: npx n8n --version

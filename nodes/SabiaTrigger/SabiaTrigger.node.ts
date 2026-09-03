@@ -13,10 +13,9 @@ import {
 } from 'n8n-workflow';
 import { hashWebhookTarget, verifySabiaSignature } from './crypto';
 import { isIntegrationEvent } from './guards';
+import type { WebhookSubscriptionResult } from './generated/public-api-v1.types';
 
 const API_BASE_URL = 'https://app.sabia.de/api/v1';
-
-type Subscription = { id: string; eventType: string; status: 'active'; createdAt: string };
 
 export class SabiaTrigger implements INodeType {
 	description: INodeTypeDescription = {
@@ -59,7 +58,7 @@ export class SabiaTrigger implements INodeType {
 						eventType: event,
 						targetUrlHash: hashWebhookTarget(webhookUrl),
 					});
-					if (!isSubscription(subscription)) {
+					if (!isSubscription(subscription) || subscription.eventType !== event) {
 						throw new NodeOperationError(this.getNode(), 'Sabia returned an invalid webhook subscription.');
 					}
 					this.getWorkflowStaticData('node').subscriptionId = subscription.id;
@@ -81,7 +80,7 @@ export class SabiaTrigger implements INodeType {
 					eventType: this.getNodeParameter('event'),
 					targetUrl: webhookUrl,
 				});
-				if (!isSubscription(subscription)) {
+				if (!isSubscription(subscription) || subscription.eventType !== this.getNodeParameter('event')) {
 					throw new NodeOperationError(this.getNode(), 'Sabia returned an invalid webhook subscription.');
 				}
 				const webhookData = this.getWorkflowStaticData('node');
@@ -158,10 +157,13 @@ async function sabiaApiRequest(
 	});
 }
 
-function isSubscription(value: unknown): value is Subscription {
+function isSubscription(value: unknown): value is WebhookSubscriptionResult {
 	if (!value || typeof value !== 'object' || Array.isArray(value)) return false;
 	const data = value as Record<string, unknown>;
-	return typeof data.id === 'string' && typeof data.eventType === 'string' && data.status === 'active' && typeof data.createdAt === 'string';
+	return Object.keys(data).sort().join(',') === 'createdAt,eventType,id,status' &&
+		typeof data.id === 'string' && /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/.test(data.id) &&
+		typeof data.eventType === 'string' && ['client.created', 'client.updated', 'client.stage_changed'].includes(data.eventType) &&
+		data.status === 'active' && typeof data.createdAt === 'string' && Number.isFinite(Date.parse(data.createdAt));
 }
 
 function httpCode(error: unknown): number | null {

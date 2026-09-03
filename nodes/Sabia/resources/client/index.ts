@@ -42,7 +42,6 @@ export const clientDescription: INodeProperties[] = [
 					request: {
 						method: 'POST',
 						url: '/clients',
-						headers: { 'Idempotency-Key': '={{$execution.id + ":" + $itemIndex}}' },
 					},
 					send: { preSend: [prepareCreateRequest] },
 				},
@@ -110,7 +109,7 @@ export const clientDescription: INodeProperties[] = [
 				pagination: {
 					type: 'generic',
 					properties: {
-						continue: '={{$response.body.nextCursor !== null}}',
+						continue: '={{typeof $response.body.nextCursor === "string" && $response.body.nextCursor.length > 0}}',
 						request: { qs: { cursor: '={{$response.body.nextCursor}}', limit: 50 } },
 					},
 				},
