@@ -1,4 +1,4 @@
-// Generated from Zod. Do not edit. Contract 1.1.0; SHA-256 3e22042b065d7f48c45cd75f06eb9ef7557c45fb89ed14c0dc1f87febabb6d94.
+// Generated from Zod. Do not edit. Contract 1.1.1; SHA-256 04a5dc417d58da687f66a4584b2bcd5eeacfc20035930bade500b8890a8e4213.
 
 export type AuthorizationHeaders = { "authorization": string };
 export type Capabilities = Array<"clients:create" | "clients:read" | "clients:search" | "clients:update" | "webhooks:manage">;

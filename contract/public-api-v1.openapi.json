@@ -2,8 +2,8 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Sabia Integration API",
-    "version": "1.1.0",
-    "x-contract-checksum": "3e22042b065d7f48c45cd75f06eb9ef7557c45fb89ed14c0dc1f87febabb6d94"
+    "version": "1.1.1",
+    "x-contract-checksum": "04a5dc417d58da687f66a4584b2bcd5eeacfc20035930bade500b8890a8e4213"
   },
   "servers": [
     {
@@ -969,7 +969,7 @@
               "slug": {
                 "type": "string",
                 "minLength": 1,
-                "maxLength": 100
+                "maxLength": 160
               }
             },
             "required": [
@@ -1272,7 +1272,7 @@
               "slug": {
                 "type": "string",
                 "minLength": 1,
-                "maxLength": 100
+                "maxLength": 160
               }
             },
             "required": [
@@ -1462,7 +1462,7 @@
               "slug": {
                 "type": "string",
                 "minLength": 1,
-                "maxLength": 100
+                "maxLength": 160
               }
             },
             "required": [
@@ -1616,7 +1616,7 @@
               "slug": {
                 "type": "string",
                 "minLength": 1,
-                "maxLength": 100
+                "maxLength": 160
               }
             },
             "required": [
@@ -1881,7 +1881,7 @@
                   "slug": {
                     "type": "string",
                     "minLength": 1,
-                    "maxLength": 100
+                    "maxLength": 160
                   }
                 },
                 "required": [
@@ -2028,7 +2028,7 @@
                   "slug": {
                     "type": "string",
                     "minLength": 1,
-                    "maxLength": 100
+                    "maxLength": 160
                   }
                 },
                 "required": [
@@ -2191,7 +2191,7 @@
                   "slug": {
                     "type": "string",
                     "minLength": 1,
-                    "maxLength": 100
+                    "maxLength": 160
                   }
                 },
                 "required": [
@@ -2366,7 +2366,7 @@
           "slug": {
             "type": "string",
             "minLength": 1,
-            "maxLength": 100
+            "maxLength": 160
           }
         },
         "required": [

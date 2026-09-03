@@ -46,6 +46,12 @@ test('guards reject duplicate contact changes, oversized values and unchanged ph
   assert.equal(isIntegrationEvent({ ...stage, data: { ...stage.data, toStage: stage.data.fromStage } }), false);
 });
 
+test('organization slugs accept the existing generated-name boundary', () => {
+  const event = fixtures.events.clientUpdated;
+  assert.equal(isIntegrationEvent({ ...event, organization: { ...event.organization, slug: 'a'.repeat(120) + '-2' } }), true);
+  assert.equal(isIntegrationEvent({ ...event, organization: { ...event.organization, slug: 'a'.repeat(161) } }), false);
+});
+
 test('webhook lifecycle looks up, creates and deletes the matching subscription', async () => {
   const trigger = new SabiaTrigger();
   const data = {};

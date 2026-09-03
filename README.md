@@ -59,7 +59,7 @@ This package supports n8n 2.x and Node.js 22 or newer. CI tests n8n 2.0.0 and th
 
 ## Contract
 
-The generated files in [`contract/`](contract/) come from Sabia's canonical Zod schemas. `contract.json` records contract version `1.1.0` and its SHA-256 checksum. The node has no runtime dependencies; Sabia remains the runtime validation authority and the trigger uses focused zero-dependency guards.
+The generated files in [`contract/`](contract/) come from Sabia's canonical Zod schemas. `contract.json` records contract version `1.1.1` and its SHA-256 checksum. The node has no runtime dependencies; Sabia remains the runtime validation authority and the trigger uses focused zero-dependency guards.
 
 ## License
 

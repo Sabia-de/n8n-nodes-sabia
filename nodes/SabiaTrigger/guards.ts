@@ -59,7 +59,7 @@ function isOrganization(value: unknown): boolean {
 		hasExactKeys(value, ['id', 'name', 'slug']) &&
 		isUuid(value.id) &&
 		isNonEmptyString(value.name, 160) &&
-		isNonEmptyString(value.slug, 100)
+		isNonEmptyString(value.slug, 160)
 	);
 }
 

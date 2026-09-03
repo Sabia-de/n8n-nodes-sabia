@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Sabia Integration API v1",
-  "contractVersion": "1.1.0",
+  "contractVersion": "1.1.1",
   "apiVersion": "v1",
   "$defs": {
     "AuthorizationHeaders": {
@@ -242,7 +242,7 @@
             "slug": {
               "type": "string",
               "minLength": 1,
-              "maxLength": 100
+              "maxLength": 160
             }
           },
           "required": [
@@ -545,7 +545,7 @@
             "slug": {
               "type": "string",
               "minLength": 1,
-              "maxLength": 100
+              "maxLength": 160
             }
           },
           "required": [
@@ -735,7 +735,7 @@
             "slug": {
               "type": "string",
               "minLength": 1,
-              "maxLength": 100
+              "maxLength": 160
             }
           },
           "required": [
@@ -889,7 +889,7 @@
             "slug": {
               "type": "string",
               "minLength": 1,
-              "maxLength": 100
+              "maxLength": 160
             }
           },
           "required": [
@@ -1154,7 +1154,7 @@
                 "slug": {
                   "type": "string",
                   "minLength": 1,
-                  "maxLength": 100
+                  "maxLength": 160
                 }
               },
               "required": [
@@ -1301,7 +1301,7 @@
                 "slug": {
                   "type": "string",
                   "minLength": 1,
-                  "maxLength": 100
+                  "maxLength": 160
                 }
               },
               "required": [
@@ -1464,7 +1464,7 @@
                 "slug": {
                   "type": "string",
                   "minLength": 1,
-                  "maxLength": 100
+                  "maxLength": 160
                 }
               },
               "required": [
@@ -1639,7 +1639,7 @@
         "slug": {
           "type": "string",
           "minLength": 1,
-          "maxLength": 100
+          "maxLength": 160
         }
       },
       "required": [
