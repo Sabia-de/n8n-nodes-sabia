@@ -59,7 +59,7 @@ jobs:
           task_runtime="$(mktemp -d)"
           task_tarball="$(npm pack --silent --pack-destination "$RUNNER_TEMP")"
           npm install --prefix "$task_runtime" --no-audit --no-fund "n8n@$task_n8n_version" "n8n-workflow@$task_workflow_version" "$RUNNER_TEMP/$task_tarball"
-          cp -R tests contract "$task_runtime/node_modules/n8n-nodes-sabia/"
+          cp -R tests contract scripts "$task_runtime/node_modules/n8n-nodes-sabia/"
           node -e 'const {createRequire}=require("node:module"); const {join}=require("node:path"); const root=process.argv[1]; const runtime=createRequire(join(root,"node_modules/n8n/package.json")); const node=createRequire(join(root,"node_modules/n8n-nodes-sabia/package.json")); if(runtime.resolve("n8n-workflow")!==node.resolve("n8n-workflow")) throw new Error("The package and n8n must use the same workflow runtime");' "$task_runtime"
           node --test "$task_runtime/node_modules/n8n-nodes-sabia/tests/"*.test.cjs
           "$task_runtime/node_modules/.bin/n8n" --version
