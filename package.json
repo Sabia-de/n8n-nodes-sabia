@@ -4,8 +4,17 @@
   "description": "Create and update Sabia clients, and trigger n8n workflows from Sabia client events.",
   "license": "MIT",
   "homepage": "https://github.com/Sabia-de/n8n-nodes-sabia#readme",
-  "keywords": ["n8n-community-node-package", "n8n", "sabia", "crm", "clients"],
-  "author": { "name": "Silas Wolf", "email": "silas@silaswolf.com" },
+  "keywords": [
+    "n8n-community-node-package",
+    "n8n",
+    "sabia",
+    "crm",
+    "clients"
+  ],
+  "author": {
+    "name": "Silas Wolf",
+    "email": "silas@silaswolf.com"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/Sabia-de/n8n-nodes-sabia.git"
@@ -17,24 +26,37 @@
     "lint": "n8n-node lint",
     "lint:fix": "n8n-node lint --fix",
     "test": "npm run build && node --test tests/*.test.cjs",
-    "scan": "npx @n8n/scan-community-package n8n-nodes-sabia",
+    "scan": "node scripts/scan-published.mjs",
     "release": "n8n-node release",
     "prepublishOnly": "n8n-node prerelease"
   },
-  "files": ["dist"],
+  "files": [
+    "dist",
+    "examples",
+    "docs/release.md"
+  ],
   "n8n": {
     "n8nNodesApiVersion": 1,
     "strict": true,
-    "credentials": ["dist/credentials/SabiaApi.credentials.js"],
-    "nodes": ["dist/nodes/Sabia/Sabia.node.js", "dist/nodes/SabiaTrigger/SabiaTrigger.node.js"]
+    "credentials": [
+      "dist/credentials/SabiaApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/Sabia/Sabia.node.js",
+      "dist/nodes/SabiaTrigger/SabiaTrigger.node.js"
+    ]
   },
   "devDependencies": {
-    "@n8n/node-cli": "*",
+    "@n8n/node-cli": "0.46.1",
     "eslint": "9.32.0",
     "prettier": "3.6.2",
     "release-it": "^19.0.4",
     "typescript": "5.9.2"
   },
-  "peerDependencies": { "n8n-workflow": "*" },
-  "engines": { "node": ">=22.0.0" }
+  "peerDependencies": {
+    "n8n-workflow": "*"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  }
 }

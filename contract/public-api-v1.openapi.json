@@ -2,8 +2,8 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Sabia Integration API",
-    "version": "1.0.0",
-    "x-contract-checksum": "2ae021b628f9035fb9534e6cfbf43a15a45d59fd1657605a21fec5c0559e6339"
+    "version": "1.1.1",
+    "x-contract-checksum": "04a5dc417d58da687f66a4584b2bcd5eeacfc20035930bade500b8890a8e4213"
   },
   "servers": [
     {
@@ -51,7 +51,7 @@
             }
           },
           "403": {
-            "description": "Organization inactive",
+            "description": "Organization inactive or API key capability missing",
             "content": {
               "application/json": {
                 "schema": {
@@ -146,7 +146,7 @@
             }
           },
           "403": {
-            "description": "Organization inactive",
+            "description": "Organization inactive or API key capability missing",
             "content": {
               "application/json": {
                 "schema": {
@@ -233,7 +233,7 @@
             }
           },
           "403": {
-            "description": "Organization inactive",
+            "description": "Organization inactive or API key capability missing",
             "content": {
               "application/json": {
                 "schema": {
@@ -321,7 +321,7 @@
             }
           },
           "403": {
-            "description": "Organization inactive",
+            "description": "Organization inactive or API key capability missing",
             "content": {
               "application/json": {
                 "schema": {
@@ -406,7 +406,7 @@
             }
           },
           "403": {
-            "description": "Organization inactive",
+            "description": "Organization inactive or API key capability missing",
             "content": {
               "application/json": {
                 "schema": {
@@ -517,7 +517,7 @@
             }
           },
           "403": {
-            "description": "Organization inactive",
+            "description": "Organization inactive or API key capability missing",
             "content": {
               "application/json": {
                 "schema": {
@@ -602,7 +602,7 @@
             }
           },
           "403": {
-            "description": "Organization inactive",
+            "description": "Organization inactive or API key capability missing",
             "content": {
               "application/json": {
                 "schema": {
@@ -680,7 +680,7 @@
             }
           },
           "403": {
-            "description": "Organization inactive",
+            "description": "Organization inactive or API key capability missing",
             "content": {
               "application/json": {
                 "schema": {
@@ -748,6 +748,7 @@
       "Capabilities": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "minItems": 1,
+        "maxItems": 5,
         "type": "array",
         "items": {
           "type": "string",
@@ -968,7 +969,7 @@
               "slug": {
                 "type": "string",
                 "minLength": 1,
-                "maxLength": 100
+                "maxLength": 160
               }
             },
             "required": [
@@ -1271,7 +1272,7 @@
               "slug": {
                 "type": "string",
                 "minLength": 1,
-                "maxLength": 100
+                "maxLength": 160
               }
             },
             "required": [
@@ -1461,7 +1462,7 @@
               "slug": {
                 "type": "string",
                 "minLength": 1,
-                "maxLength": 100
+                "maxLength": 160
               }
             },
             "required": [
@@ -1560,6 +1561,7 @@
               },
               "changedFields": {
                 "minItems": 1,
+                "maxItems": 5,
                 "type": "array",
                 "items": {
                   "type": "string",
@@ -1614,7 +1616,7 @@
               "slug": {
                 "type": "string",
                 "minLength": 1,
-                "maxLength": 100
+                "maxLength": 160
               }
             },
             "required": [
@@ -1626,6 +1628,7 @@
           },
           "capabilities": {
             "minItems": 1,
+            "maxItems": 5,
             "type": "array",
             "items": {
               "type": "string",
@@ -1780,6 +1783,25 @@
               {
                 "type": "object",
                 "properties": {
+                  "requiredCapability": {
+                    "type": "string",
+                    "enum": [
+                      "clients:create",
+                      "clients:read",
+                      "clients:search",
+                      "clients:update",
+                      "webhooks:manage"
+                    ]
+                  }
+                },
+                "required": [
+                  "requiredCapability"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
                   "issues": {
                     "maxItems": 20,
                     "type": "array",
@@ -1859,7 +1881,7 @@
                   "slug": {
                     "type": "string",
                     "minLength": 1,
-                    "maxLength": 100
+                    "maxLength": 160
                   }
                 },
                 "required": [
@@ -2006,7 +2028,7 @@
                   "slug": {
                     "type": "string",
                     "minLength": 1,
-                    "maxLength": 100
+                    "maxLength": 160
                   }
                 },
                 "required": [
@@ -2105,6 +2127,7 @@
                   },
                   "changedFields": {
                     "minItems": 1,
+                    "maxItems": 5,
                     "type": "array",
                     "items": {
                       "type": "string",
@@ -2168,7 +2191,7 @@
                   "slug": {
                     "type": "string",
                     "minLength": 1,
-                    "maxLength": 100
+                    "maxLength": 160
                   }
                 },
                 "required": [
@@ -2343,7 +2366,7 @@
           "slug": {
             "type": "string",
             "minLength": 1,
-            "maxLength": 100
+            "maxLength": 160
           }
         },
         "required": [

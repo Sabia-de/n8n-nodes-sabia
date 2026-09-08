@@ -1,13 +1,28 @@
-// Generated from Zod. Do not edit. Contract 1.0.0; SHA-256 2ae021b628f9035fb9534e6cfbf43a15a45d59fd1657605a21fec5c0559e6339.
+// Generated from Zod. Do not edit. Contract 1.1.1; SHA-256 04a5dc417d58da687f66a4584b2bcd5eeacfc20035930bade500b8890a8e4213.
 
-export type ApiVersion = "v1";
-export type IntegrationEventType = "client.created" | "client.updated" | "client.stage_changed";
-export interface Organization { id: string; name: string; slug: string }
-export interface ClientContact { id: string; firstName: string | null; lastName: string | null; displayName: string | null; email: string | null; phone: string | null }
-export interface Client extends ClientContact { createdAt: string; updatedAt: string }
-export interface Connection { apiVersion: ApiVersion; organization: Organization; capabilities: Array<"clients:create" | "clients:read" | "clients:search" | "clients:update" | "webhooks:manage"> }
-export interface ClientCreatedEvent { id: string; type: "client.created"; apiVersion: ApiVersion; occurredAt: string; organization: Organization; data: { client: ClientContact } }
-export interface ClientUpdatedEvent { id: string; type: "client.updated"; apiVersion: ApiVersion; occurredAt: string; organization: Organization; data: { client: ClientContact; changedFields: Array<"firstName" | "lastName" | "displayName" | "email" | "phone"> } }
-export interface ClientStageChangedEvent { id: string; type: "client.stage_changed"; apiVersion: ApiVersion; occurredAt: string; organization: Organization; data: { client: ClientContact; fromStage: { slug: string; label: string }; toStage: { slug: string; label: string } } }
-export type IntegrationEvent = ClientCreatedEvent | ClientUpdatedEvent | ClientStageChangedEvent;
-export interface IntegrationError { code: string; message: string; requestId: string; details?: { clientId: string } | { retryAfterSeconds: number } | { issues: Array<{ path: string; message: string }> } }
+export type AuthorizationHeaders = { "authorization": string };
+export type Capabilities = Array<"clients:create" | "clients:read" | "clients:search" | "clients:update" | "webhooks:manage">;
+export type Client = { "id": string; "firstName": (string) | (null); "lastName": (string) | (null); "displayName": (string) | (null); "email": (string) | (null); "phone": (string) | (null); "createdAt": string; "updatedAt": string };
+export type ClientContact = { "id": string; "firstName": (string) | (null); "lastName": (string) | (null); "displayName": (string) | (null); "email": (string) | (null); "phone": (string) | (null) };
+export type ClientCreatedEvent = { "id": string; "apiVersion": "v1"; "occurredAt": string; "organization": { "id": string; "name": string; "slug": string }; "type": "client.created"; "data": { "client": { "id": string; "firstName": (string) | (null); "lastName": (string) | (null); "displayName": (string) | (null); "email": (string) | (null); "phone": (string) | (null) } } };
+export type ClientIdPath = { "clientId": string };
+export type ClientList = { "data": Array<{ "id": string; "firstName": (string) | (null); "lastName": (string) | (null); "displayName": (string) | (null); "email": (string) | (null); "phone": (string) | (null); "createdAt": string; "updatedAt": string }>; "nextCursor": (string) | (null) };
+export type ClientListQuery = { "query"?: string; "cursor"?: string; "limit"?: number };
+export type ClientStageChangedEvent = { "id": string; "apiVersion": "v1"; "occurredAt": string; "organization": { "id": string; "name": string; "slug": string }; "type": "client.stage_changed"; "data": { "client": { "id": string; "firstName": (string) | (null); "lastName": (string) | (null); "displayName": (string) | (null); "email": (string) | (null); "phone": (string) | (null) }; "fromStage": { "slug": string; "label": string }; "toStage": { "slug": string; "label": string } } };
+export type ClientUpdatedEvent = { "id": string; "apiVersion": "v1"; "occurredAt": string; "organization": { "id": string; "name": string; "slug": string }; "type": "client.updated"; "data": { "client": { "id": string; "firstName": (string) | (null); "lastName": (string) | (null); "displayName": (string) | (null); "email": (string) | (null); "phone": (string) | (null) }; "changedFields": Array<"firstName" | "lastName" | "displayName" | "email" | "phone"> } };
+export type Connection = { "apiVersion": "v1"; "organization": { "id": string; "name": string; "slug": string }; "capabilities": Array<"clients:create" | "clients:read" | "clients:search" | "clients:update" | "webhooks:manage"> };
+export type CreateClientHeaders = { "authorization": string; "idempotency-key": string };
+export type CreateClientRequest = { "firstName"?: (string) | (null); "lastName"?: (string) | (null); "displayName"?: (string) | (null); "email"?: (string) | (null); "phone"?: (string) | (null) };
+export type Error = { "code": string; "message": string; "details"?: ({ "clientId": string }) | ({ "retryAfterSeconds": number }) | ({ "requiredCapability": "clients:create" | "clients:read" | "clients:search" | "clients:update" | "webhooks:manage" }) | ({ "issues": Array<{ "path": string; "message": string }> }); "requestId": string };
+export type Event = ({ "id": string; "apiVersion": "v1"; "occurredAt": string; "organization": { "id": string; "name": string; "slug": string }; "type": "client.created"; "data": { "client": { "id": string; "firstName": (string) | (null); "lastName": (string) | (null); "displayName": (string) | (null); "email": (string) | (null); "phone": (string) | (null) } } }) | ({ "id": string; "apiVersion": "v1"; "occurredAt": string; "organization": { "id": string; "name": string; "slug": string }; "type": "client.updated"; "data": { "client": { "id": string; "firstName": (string) | (null); "lastName": (string) | (null); "displayName": (string) | (null); "email": (string) | (null); "phone": (string) | (null) }; "changedFields": Array<"firstName" | "lastName" | "displayName" | "email" | "phone"> } }) | ({ "id": string; "apiVersion": "v1"; "occurredAt": string; "organization": { "id": string; "name": string; "slug": string }; "type": "client.stage_changed"; "data": { "client": { "id": string; "firstName": (string) | (null); "lastName": (string) | (null); "displayName": (string) | (null); "email": (string) | (null); "phone": (string) | (null) }; "fromStage": { "slug": string; "label": string }; "toStage": { "slug": string; "label": string } } });
+export type Organization = { "id": string; "name": string; "slug": string };
+export type SubscriptionIdPath = { "subscriptionId": string };
+export type UpdateClientRequest = { "firstName"?: (string) | (null); "lastName"?: (string) | (null); "displayName"?: (string) | (null); "email"?: (string) | (null); "phone"?: (string) | (null) };
+export type WebhookDeleteResult = { "deleted": true };
+export type WebhookLookupQuery = { "eventType": "client.created" | "client.updated" | "client.stage_changed"; "targetUrlHash": string };
+export type WebhookSubscriptionRequest = { "eventType": "client.created" | "client.updated" | "client.stage_changed"; "targetUrl": string };
+export type WebhookSubscriptionResult = { "id": string; "eventType": "client.created" | "client.updated" | "client.stage_changed"; "status": "active"; "createdAt": string };
+export type ApiVersion = Connection["apiVersion"];
+export type IntegrationEvent = Event;
+export type IntegrationEventType = Event["type"];
+export type IntegrationError = Error;
