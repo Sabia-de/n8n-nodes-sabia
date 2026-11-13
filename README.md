@@ -64,6 +64,6 @@ The generated files in [`contract/`](contract/) come from Sabia's canonical Zod 
 
 ## Node.js security
 
-Use `nvm use` before you install packages or run local commands. The build and CI use Node.js 24.22.1. The daily Node security check reports newer security releases.
+Use `nvm use` before you install packages or run local commands. The build and CI use Node.js 24.22.3. The daily Node security check reports newer security releases.
 
-The installed node runs inside the n8n host. That host must use Node.js 22.23.4, 24.22.1, or 26.12.1, or a newer patch in the same release line. Updating this package does not update the host runtime.
+The installed node runs inside the n8n host. That host must use Node.js 22.23.5, 24.22.3, or 26.13.1, or a newer patch in the same release line. Updating this package does not update the host runtime.
